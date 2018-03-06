@@ -2,6 +2,7 @@ public class LetterInventory {
    
    private String data;
    private int[] numberLetter;
+   private int[] sumArray;
    
    public LetterInventory(String data) {
       this.data = data;
@@ -17,30 +18,31 @@ public class LetterInventory {
          // a = 97 ~ z = 122,asciII table 
          char number = data.charAt(i);
          int theIndex = (int) number;   
-         for(int j =97; j <= 122; j++) {
-            if(theIndex == j) {
-               numberLetter[j-97] += 1;
-            }
-         }
+         if(theIndex >= 'a' && theIndex <='z') {
+            numberLetter[theIndex-'a'] += 1;
+         }         
       }     
+   }
+   
+   public LetterInventory(int[] array) {
+      this.sumArray = array;   
    }
    
    // Returns a count of how many of this letter are in the inventory
    public int get(char letter) {
-      if(!Character.isLetter(letter)) {
-         throw new IllegalArgumentException("a IllegalArgumentException");
+      int theIndex = (int)letter;
+      if(!(theIndex >= 'a' && theIndex <='z')) {
+         throw new IllegalArgumentException("the character is no a letter");
       }
       else {
-         char character = letter;
-         int theIndex = (int) character;
-         return this.numberLetter[theIndex -97];
+         return this.numberLetter[theIndex - 'a'];
       }
    }
    
    // Sets the count for the given letter to the given value
    public void set (char letter, int value) {
       int number = (int) letter;
-      this.numberLetter[number - 97]  = value; 
+      this.numberLetter[number - 'a']  = value; 
    }
    
    
@@ -70,18 +72,26 @@ public class LetterInventory {
    }
    
    // use object as a return type here?
-   public  LetterInventoryadd(LetterInventory other) {
-      this.size() += other.size();
+   public LetterInventory add(LetterInventory other) {
+      int[] newString = new int[26];
+      for(int i =0; i < newString.length; i++) {
+         newString[i] = this.get((char)(i+97)) + other.get((char)(i+97));
+      }
+      LetterInventory newObject = new LetterInventory(newString);
+      return newObject;
    }
    
    // use object as a return type here?
-   public LetterInventorysubtract(LetterInventory other) {
-      if(this.size() < other.size()) {
-         return null;
-      }
-      else {
-         return //object?
-      }
+   public LetterInventory subtract(LetterInventory other) {
+         int[] newString = new int[26];
+         for(int i=0; i < newString.length;i++) {
+            if(this.get((char)(i+97)) < other.get((char)(i+97))) {
+               return null;
+            }                  
+            newString[i] = this.get((char)(i+97)) - other.get((char)(i+97));           
+         }
+         LetterInventory newObject = new LetterInventory(newString);
+         return newObject;
    }
    
 }
