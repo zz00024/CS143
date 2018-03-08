@@ -3,13 +3,14 @@ public class LetterInventory {
    private String data;
    private int[] numberLetter;
    private int[] sumArray;
+   private int sumofCount;
    
    public LetterInventory(String data) {
-      this.data = data;
       // convert the string data to a string has no numberic value and no space
       data = data.toLowerCase();
       // array for number of each letter in string data
-      this.numberLetter = new int[26];
+      numberLetter = new int[26];
+      sumofCount = 0;
       for(int z = 0; z < numberLetter.length; z++) {
          numberLetter[z] = 0;
       }
@@ -19,9 +20,11 @@ public class LetterInventory {
          char number = data.charAt(i);
          int theIndex = (int) number;   
          if(theIndex >= 'a' && theIndex <='z') {
-            numberLetter[theIndex-'a'] += 1;
+            numberLetter[theIndex-'a'] += 1;   
+            sumofCount += 1;
          }         
-      }     
+      }
+           
    }
    
    public LetterInventory(int[] array) {
@@ -48,11 +51,7 @@ public class LetterInventory {
    
    // Returns the sum of all of the counts in this inventory.
    public int size() {
-      int count =0;
-      for(int i = 0; i < this.numberLetter.length; i++) {
-         count += this.numberLetter[i];
-      }
-      return count;
+      return this.sumofCount;
    }
    
    //
