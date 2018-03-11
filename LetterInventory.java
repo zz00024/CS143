@@ -5,6 +5,7 @@ public class LetterInventory {
    private int sumofCount;
      
    public LetterInventory(String data) {
+      // Rita: why are we storing data? Are you using it in any other places?
       // convert the string data to a string has no numberic value and no space
       data = data.toLowerCase();
       // array for number of each letter in string data
@@ -16,6 +17,7 @@ public class LetterInventory {
       
       for(int i =0; i<data.length(); i++) {
          // a = 97 ~ z = 122,asciII table 
+         // Rita: better variable names please
          char number = data.charAt(i);
          int theIndex = (int) number;   
          if(theIndex >= 'a' && theIndex <='z') {
@@ -42,6 +44,7 @@ public class LetterInventory {
          throw new IllegalArgumentException("the character is no a letter");
       }
       else {
+         // Rita: remove the else statement for better style
          return this.numberLetter[theIndex - 'a'];
       }
    }
@@ -83,8 +86,12 @@ public class LetterInventory {
       return toString;
    }
    
+   // Rita: remove debugging comments
    // use object as a return type here?
    public LetterInventory add(LetterInventory other) {
+      // Rita: 26 is a hardcoded number here. Can you think of other way to make it more scalable?
+      // ie. You are using 26 in a lot of places in this file. If the number of alphabets is changed to
+      // 30, you have to update a lot of places. Is there a way you can only update one place?
       int[] newString = new int[26];
       for(int i =0; i < newString.length; i++) {
          newString[i] = this.get((char)(i+97)) + other.get((char)(i+97));
