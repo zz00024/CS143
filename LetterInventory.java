@@ -2,9 +2,8 @@ public class LetterInventory {
    
    private String data;
    private int[] numberLetter;
-   private int[] sumArray;
    private int sumofCount;
-   
+     
    public LetterInventory(String data) {
       // convert the string data to a string has no numberic value and no space
       data = data.toLowerCase();
@@ -23,17 +22,22 @@ public class LetterInventory {
             numberLetter[theIndex-'a'] += 1;   
             sumofCount += 1;
          }         
-      }
-           
+      }           
    }
    
    public LetterInventory(int[] array) {
-      this.sumArray = array;   
+      numberLetter = array;
+      sumofCount = 0;
+      for(int i =0; i < numberLetter.length; i++) {
+         sumofCount += numberLetter[i];
+      }            
    }
    
    // Returns a count of how many of this letter are in the inventory
    public int get(char letter) {
-      int theIndex = (int)letter;
+      String newLetter = Character.toString(letter).toLowerCase();
+      char finalLetter = newLetter.charAt(0);
+      int theIndex = (int)finalLetter;      
       if(!(theIndex >= 'a' && theIndex <='z')) {
          throw new IllegalArgumentException("the character is no a letter");
       }
@@ -44,26 +48,35 @@ public class LetterInventory {
    
    // Sets the count for the given letter to the given value
    public void set (char letter, int value) {
-      int number = (int) letter;
-      this.numberLetter[number - 'a']  = value; 
+      letter = Character.toLowerCase(letter);
+      int theIndex = (int)letter;
+      if(!(theIndex >= 'a' && theIndex <='z')) {
+         throw new IllegalArgumentException("the character is no a letter");
+      }
+      else if(value < 0) {
+         throw new IllegalArgumentException("the value is negative");
+      }
+      else {
+         this.sumofCount -= this.numberLetter[theIndex - 'a']; 
+         this.numberLetter[theIndex - 'a']  = value;
+         this.sumofCount += value; 
+      } 
    }
-   
    
    // Returns the sum of all of the counts in this inventory.
    public int size() {
       return this.sumofCount;
    }
    
-   //
    public boolean isEmpty() {
       return this.size()==0;
    }
-   
+      
    public String toString() {
       String toString = "[";
       for(int i =0; i < this.numberLetter.length; i++) {
-         for(int j=0; j < this.numberLetter[j] ; j++) {
-            toString += (char)i+97;
+         for(int j=0; j < this.numberLetter[i] ; j++) {            
+            toString += (char)(i+97);          
          }
       }
       toString += "]";
@@ -76,8 +89,8 @@ public class LetterInventory {
       for(int i =0; i < newString.length; i++) {
          newString[i] = this.get((char)(i+97)) + other.get((char)(i+97));
       }
-      LetterInventory newObject = new LetterInventory(newString);
-      return newObject;
+      LetterInventory combinedObject = new LetterInventory(newString);      
+      return combinedObject;
    }
    
    // use object as a return type here?
@@ -89,8 +102,7 @@ public class LetterInventory {
             }                  
             newString[i] = this.get((char)(i+97)) - other.get((char)(i+97));           
          }
-         LetterInventory newObject = new LetterInventory(newString);
-         return newObject;
-   }
-   
+         LetterInventory combinedObject = new LetterInventory(newString);
+         return combinedObject;
+   }   
 }
