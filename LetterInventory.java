@@ -6,7 +6,6 @@ public class LetterInventory {
    private final int alphabetsNum = 26;
      
    public LetterInventory(String data) {
-      // convert the string data to a string has no numberic value and no space
       data = data.toLowerCase();
       // array for number of each letter in string data
       numberLetter = new int[alphabetsNum];
@@ -83,8 +82,10 @@ public class LetterInventory {
       return toString;
    }
    
+   // Rita: remove debugging comments
    // use object as a return type here?
    public LetterInventory add(LetterInventory other) {
+      int[] newString = new int[alphabetsNum];
       int[] newString = new int[alphabetsNum];
       for(int i =0; i < newString.length; i++) {
          newString[i] = this.get((char)(i+97)) + other.get((char)(i+97));
