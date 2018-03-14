@@ -3,12 +3,13 @@ public class LetterInventory {
    private String data;
    private int[] numberLetter;
    private int sumofCount;
+   private final int alphabetsNum = 26;
      
    public LetterInventory(String data) {
       // convert the string data to a string has no numberic value and no space
       data = data.toLowerCase();
       // array for number of each letter in string data
-      numberLetter = new int[26];
+      numberLetter = new int[alphabetsNum];
       sumofCount = 0;
       for(int z = 0; z < numberLetter.length; z++) {
          numberLetter[z] = 0;
@@ -16,8 +17,8 @@ public class LetterInventory {
       
       for(int i =0; i<data.length(); i++) {
          // a = 97 ~ z = 122,asciII table 
-         char number = data.charAt(i);
-         int theIndex = (int) number;   
+         char convertedNumber = data.charAt(i);
+         int theIndex = (int) convertedNumber;   
          if(theIndex >= 'a' && theIndex <='z') {
             numberLetter[theIndex-'a'] += 1;   
             sumofCount += 1;
@@ -41,9 +42,8 @@ public class LetterInventory {
       if(!(theIndex >= 'a' && theIndex <='z')) {
          throw new IllegalArgumentException("the character is no a letter");
       }
-      else {
-         return this.numberLetter[theIndex - 'a'];
-      }
+      return this.numberLetter[theIndex - 'a'];
+      
    }
    
    // Sets the count for the given letter to the given value
@@ -85,7 +85,7 @@ public class LetterInventory {
    
    // use object as a return type here?
    public LetterInventory add(LetterInventory other) {
-      int[] newString = new int[26];
+      int[] newString = new int[alphabetsNum];
       for(int i =0; i < newString.length; i++) {
          newString[i] = this.get((char)(i+97)) + other.get((char)(i+97));
       }
@@ -95,7 +95,7 @@ public class LetterInventory {
    
    // use object as a return type here?
    public LetterInventory subtract(LetterInventory other) {
-         int[] newString = new int[26];
+         int[] newString = new int[alphabetsNum];
          for(int i=0; i < newString.length;i++) {
             if(this.get((char)(i+97)) < other.get((char)(i+97))) {
                return null;
