@@ -82,10 +82,8 @@ public class LetterInventory {
       return toString;
    }
    
-   // Rita: remove debugging comments
    // use object as a return type here?
    public LetterInventory add(LetterInventory other) {
-      int[] newString = new int[alphabetsNum];
       int[] newString = new int[alphabetsNum];
       for(int i =0; i < newString.length; i++) {
          newString[i] = this.get((char)(i+97)) + other.get((char)(i+97));
